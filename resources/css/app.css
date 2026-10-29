@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] { display: none !important; }
+
+@layer base {
+    body { @apply bg-slate-100 text-slate-800; }
+}
+
+@layer components {
+    /* Tombol */
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition
+               focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50;
+    }
+    .btn-primary { @apply bg-uksw-700 text-white shadow-sm hover:bg-uksw-800 focus-visible:ring-uksw-500; }
+    .btn-gold    { @apply bg-gold-400 text-uksw-950 shadow-sm hover:bg-gold-300 focus-visible:ring-gold-500; }
+    .btn-outline { @apply border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 focus-visible:ring-uksw-500; }
+    .btn-danger  { @apply bg-rose-600 text-white shadow-sm hover:bg-rose-700 focus-visible:ring-rose-500; }
+
+    /* Input */
+    .field {
+        @apply w-full rounded-lg border-slate-300 bg-white text-sm shadow-sm placeholder:text-slate-400
+               focus:border-uksw-600 focus:ring-uksw-600;
+    }
+
+    /* Kartu */
+    .card { @apply rounded-2xl border border-slate-200 bg-white shadow-sm; }
+
+    /* Tabel */
+    .table-campus { @apply min-w-full text-sm; }
+    .table-campus thead { @apply bg-uksw-900 text-left text-xs uppercase tracking-wider text-uksw-100; }
+    .table-campus th { @apply px-4 py-3 font-semibold; }
+    .table-campus td { @apply px-4 py-3; }
+    .table-campus tbody tr { @apply transition hover:bg-uksw-50/60; }
+    .table-campus tbody { @apply divide-y divide-slate-100; }
+
+    /* Badge */
+    .badge { @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold; }
+    .badge-blue  { @apply bg-uksw-50 text-uksw-700 ring-1 ring-inset ring-uksw-200; }
+    .badge-gold  { @apply bg-gold-100 text-gold-700 ring-1 ring-inset ring-gold-300; }
+    .badge-green { @apply bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-200; }
+    .badge-slate { @apply bg-slate-100 text-slate-600 ring-1 ring-inset ring-slate-200; }
+}
