@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import client from '../api/client'
+import { getBooks, addBook, updateBook, deleteBook } from '../api/api'
 import { useAuth } from '../context/AuthContext'
 import Modal from '../components/Modal'
 
@@ -32,7 +32,7 @@ export default function Books() {
   const fetchBooks = useCallback(async () => {
     setLoading(true)
     try {
-      const res = await client.get('/books', { params: { q: search, page } })
+      const res = await getBooks({ q: search, page })
       setBooks(res.data.data)
       setMeta(res.data.meta)
     } catch {
@@ -84,10 +84,10 @@ export default function Books() {
       if (payload.stock === '') payload.stock = 0
 
       if (editing) {
-        await client.put(`/books/${editing.id}`, payload)
+        await updateBook(editing.id, payload)
         toast.success('Buku berhasil diperbarui.')
       } else {
-        await client.post('/books', payload)
+        await addBook(payload)
         toast.success('Buku berhasil ditambahkan.')
       }
       setModalOpen(false)
@@ -108,7 +108,7 @@ export default function Books() {
   const handleDelete = async (book) => {
     if (!window.confirm(`Hapus buku "${book.title}"?`)) return
     try {
-      await client.delete(`/books/${book.id}`)
+      await deleteBook(book.id)
       toast.success('Buku berhasil dihapus.')
       fetchBooks()
     } catch {

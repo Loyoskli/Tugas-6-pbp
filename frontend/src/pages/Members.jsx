@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import client from '../api/client'
+import { getMembers, addMember, updateMember, deleteMember } from '../api/api'
 import { useAuth } from '../context/AuthContext'
 import Modal from '../components/Modal'
 
@@ -24,7 +24,7 @@ export default function Members() {
   const fetchMembers = useCallback(async () => {
     setLoading(true)
     try {
-      const res = await client.get('/members', { params: { q: search, page } })
+      const res = await getMembers({ q: search, page })
       setMembers(res.data.data)
       setMeta(res.data.meta)
     } catch {
@@ -69,10 +69,10 @@ export default function Members() {
     setSaving(true)
     try {
       if (editing) {
-        await client.put(`/members/${editing.id}`, form)
+        await updateMember(editing.id, form)
         toast.success('Anggota berhasil diperbarui.')
       } else {
-        await client.post('/members', form)
+        await addMember(form)
         toast.success('Anggota berhasil ditambahkan.')
       }
       setModalOpen(false)
@@ -93,7 +93,7 @@ export default function Members() {
   const handleDelete = async (member) => {
     if (!window.confirm(`Hapus anggota "${member.name}"?`)) return
     try {
-      await client.delete(`/members/${member.id}`)
+      await deleteMember(member.id)
       toast.success('Anggota berhasil dihapus.')
       fetchMembers()
     } catch {
